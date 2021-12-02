@@ -10,10 +10,10 @@ var badBurger, badPie, badEyescream, badNachos, badPizza, badSandwich, badCheese
 var hotdog, pasta, pie, sandwich, taco, turkey, cake, extraLifeImg, poisionImg, protien, rawFood;
 var chefImg, backgroundImg;
 var cakeS;
-var PLAY = 1;
-var END = 2;
-var START = 0;
-var gameState = START;
+var PLAY;
+var END ;
+var START 
+var gameState = "START";
 var cakesGroup;
 var gameOverImg, gameOverr;
 var lives = 3;
@@ -77,105 +77,42 @@ gameOverr.scale = 2;
 
 function draw(){
     background("black");
-    image(backgroundImg,0,0,900,800);
+   image(backgroundImg,0,0,900,800);
     textSize(25);
     fill("blue");
 
     text("Score: "+score,185,50);
     text("Lives: "+lives,770,50);
+
+    //text("Click to start.", 450,250);
+     text("Use the left and right arrows to move", 350,50);
+    text("Avoid the Bad foods, Collect the good Foods", 300,100)
+    // text("some foods have special effects so be ready", 300,150)
+
+    text(mouseX+","+mouseY,mouseX,mouseY);
+        
+  
   
     //PUNCH
 
     // Chef better
 
-    
-  
-    if(gameState === START){
-        console.log("start")
-        text("Click to start.", 450,250);
-        text("Use the left and right arrows to move", 350,300);
-        text("Avoid the Bad foods, Collect the good Foods", 300,350)
-        text("some foods have special effects so be ready", 300,400)
-        
-    } 
-    else if(gameState === PLAY){
-
-        console.log("play")
-
-        if(keyIsDown(RIGHT_ARROW)){
-            chef.x +=6;
-        }
-    
-        if(keyIsDown(LEFT_ARROW)){
-            chef.x -=6;
-        }
-    
-        if(chef.isTouching(goodFoods)){
-            score += 1;
-        }
-
-        
-        if(chef.isTouching(cakesGroup)){
-            chef.scale = 4;
-            console.log("message");
-        }
-       
-        if(chef.isTouching(waffles)){
-           lives +=1 ;
-        }
-
-         if(chef.isTouching(mushrooms)){
-            lives = 0; 
-         }
-
-         if(chef.isTouching(protienGroup)){
-            if(keyIsDown(RIGHT_ARROW)){
-                chef.x +=9;
-            }
-        
-            if(keyIsDown(LEFT_ARROW)){
-                chef.x -=9;
-            }
-         }
-
-         if(chef.isTouching(prizes)){
-             score+=10
-         }
-
-         if(chef.isTouching(rawFoods)){
-            if(keyIsDown(RIGHT_ARROW)){
-                chef.velocityX =1;
-            }
-        
-            if(keyIsDown(LEFT_ARROW)){
-                chef.velocityX =-1;
-            }
-         }
-
-        badFood();
-        goodFood();
-        pize();
-        specialCake();
-        specialWaffle();
-        specialMushroom();
-        specialProtien();
-        specialRawFood();
-        if(badFoods.isTouching(chef)){
-          lives -=1
-        }
-
-        if(lives<=0){
-            gameState = END;
-        }
+    if(keyDown("space") && gameState === "START"){
+        startState();
+        gameState ="PLAY"
     }
-    else if(gameState == END){
+    else if(gameState == "END"){
         console.log("end");
         gameOverr.visible = true;
         badFoods.destroyEach();
         goodFoods.destroyEach();
         prizes.destroyEach();
-    
     }
+    else if(gameState==="PLAY"){
+        playState();
+    }
+  
+    
 
  
 
@@ -185,6 +122,17 @@ function draw(){
     
 }
 
+function startState(){
+
+   
+        console.log("start")
+        text("Click to start.", 450,250);
+        text("Use the left and right arrows to move", 350,300);
+        text("Avoid the Bad foods, Collect the good Foods", 300,350)
+        text("some foods have special effects so be ready", 300,400)
+        
+  
+}
 
 function badFood(){
 
@@ -354,7 +302,80 @@ function specialRawFood(){
 }
 
 function mousePressed(){
-  if(gameState == START){
-    gamestate = PLAY;
+  if(gameState == "START"){
+    gameState = "PLAY";
+    console.log("psqaa");
   }
 }
+
+function playState(){
+    
+        console.log("play")
+
+        if(keyIsDown(RIGHT_ARROW)){
+            chef.x +=6;
+        }
+    
+        if(keyIsDown(LEFT_ARROW)){
+            chef.x -=6;
+        }
+    
+        if(chef.isTouching(goodFoods)){
+            score += 1;
+        }
+
+        
+        if(chef.isTouching(cakesGroup)){
+            chef.scale = 4;
+            console.log("message");
+        }
+       
+        if(chef.isTouching(waffles)){
+           lives +=1 ;
+        }
+
+         if(chef.isTouching(mushrooms)){
+            lives = 0; 
+         }
+
+         if(chef.isTouching(protienGroup)){
+            if(keyIsDown(RIGHT_ARROW)){
+                chef.x +=9;
+            }
+        
+            if(keyIsDown(LEFT_ARROW)){
+                chef.x -=9;
+            }
+         }
+
+         if(chef.isTouching(prizes)){
+             score+=10
+         }
+
+         if(chef.isTouching(rawFoods)){
+            if(keyIsDown(RIGHT_ARROW)){
+                chef.velocityX =1;
+            }
+        
+            if(keyIsDown(LEFT_ARROW)){
+                chef.velocityX =-1;
+            }
+         }
+
+        badFood();
+        goodFood();
+        pize();
+        specialCake();
+        specialWaffle();
+        specialMushroom();
+        specialProtien();
+        specialRawFood();
+        if(badFoods.isTouching(chef)){
+          lives -=1
+        }
+
+        if(lives<=0){
+            gameState = END;
+        }
+}
+
