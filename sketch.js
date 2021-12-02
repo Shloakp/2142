@@ -85,8 +85,8 @@ function draw(){
     text("Lives: "+lives,770,50);
 
     //text("Click to start.", 450,250);
-     text("Use the left and right arrows to move", 350,50);
-    text("Avoid the Bad foods, Collect the good Foods", 300,100)
+     //text("Use the left and right arrows to move", 350,50);
+    //text("Avoid the Bad foods, Collect the good Foods", 300,100)
     // text("some foods have special effects so be ready", 300,150)
 
     text(mouseX+","+mouseY,mouseX,mouseY);
@@ -96,6 +96,13 @@ function draw(){
     //PUNCH
 
     // Chef better
+
+    if(gameState === "START"){
+        text("Click to start.", 450,250);
+        text("Use the left and right arrows to move", 350,300);
+        text("Avoid the Bad foods, Collect the good Foods", 300,350)
+        text("some foods have special effects so be ready", 300,400)
+    }
 
     if(keyDown("space") && gameState === "START"){
         startState();
@@ -287,7 +294,7 @@ function specialProtien(){
 
 
 function specialRawFood(){
-    if(frameCount %10 === 0){
+    if(frameCount %650 === 0){
        raw = createSprite(Math.round(random(99,701)),50)
         raw.addImage(rawFood)
         raw.scale = 0.27
@@ -353,13 +360,7 @@ function playState(){
          }
 
          if(chef.isTouching(rawFoods)){
-            if(keyIsDown(RIGHT_ARROW)){
-                chef.velocityX =1;
-            }
-        
-            if(keyIsDown(LEFT_ARROW)){
-                chef.velocityX =-1;
-            }
+                score = 0;
          }
 
         badFood();
@@ -375,7 +376,7 @@ function playState(){
         }
 
         if(lives<=0){
-            gameState = END;
+            gameState = "END";
         }
 }
 
